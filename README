@@ -1,11 +1,11 @@
 This is a mirror of http://www.vim.org/scripts/script.php?script_id=356
 
-This plugin contains functions/mappings/commands to enable Vim to access several databases. 
+This plugin contains functions/mappings/commands to enable Vim to access several databases.
 
-Current databases supported are: 
+Current databases supported are:
 ODBC / Perl DBI (Any database with a Perl DBI driver)
 MySQL
-Oracle 
+Oracle
 Oracle Rdb (VMS)
 SAP HANA
 SAP Sybase SQL Anywhere (SA/ASA)
@@ -14,7 +14,7 @@ SAP Sybase Adaptive Server Enterprise (ASE)
 SAP Sybase UltraLite (UL)
 Microsoft SQL Server
 IBM DB2
-Interbase 
+Interbase
 SQLite
 PostgreSQL
 Ingres
@@ -25,6 +25,7 @@ For Perl's DBI layer if the database you are using is not *natively* supported b
 
 NOTE: As of version 4.0 this plugin requires Vim 7.
 Version 5.0 supports Vim 7's autoload feature.
+Version 25.0 supports Vim 8's Job / Channel asynchronous feature.
 
 dbext provides a common interface between your editor and a database.  If your company/project moves onto a new database platform, there is no need to learn the new databases tools.  While editing your SQL (and without leaving Vim) you can execute database commands, run queries, display results, and view database objects.  dbext understands various programming languages, and can parse and prompt the user for [host] variables and execute the resulting statement.  See below for more details.
 
@@ -114,7 +115,7 @@ The current supported languages are:
         PHP, Java, JSP, JavaScript, JProperties, Perl, SQL, Vim
 
 For example assume you had the following Java code:
-String mySQL = 
+String mySQL =
     "SELECT s.script, ts.event, t.name                  " +
     "     , s.script_language, sv.name                  " +
     "  FROM ml_script s, ml_table_script ts, ml_table t " +
@@ -123,35 +124,35 @@ String mySQL =
     "   AND ts.version_id = "+obj.method() +
     "   AND ts.table_id   = t.table_id                  ";
 
-If you visually select from the "SELECT ... to the "; and ran 
- :'<,'>DBExecSQL    (or used the default map <Leader>se)
+If you visually select from the "SELECT ... to the "; and ran
+:'<,'>DBExecSQL    (or used the default map <Leader>se)
 
 The Java filetype support would concatenate each individual string into one
 single string.  In this case it removed the " + " and concatenated  the
-lines to result in the following (assuming this is on one line): 
+lines to result in the following (assuming this is on one line):
        SELECT s.script, ts.event, t.name , s.script_language, sv.name
-       FROM ml_script s, ml_table_script ts, ml_table t 
+       FROM ml_script s, ml_table_script ts, ml_table t
                   , ml_script_version sv
       WHERE s.script_id   = " + script_version + "
         AND ts.version_id = "+obj.method() +"
-        AND ts.table_id   = t.table_id 
+        AND ts.table_id   = t.table_id
 
 Next, it will prompt you for replacement values for the various variables or  objects you used in the string.
-Assuming you had the default behaviour turned on, you would be prompted  to supply a value for: 
+Assuming you had the default behaviour turned on, you would be prompted  to supply a value for:
                 " + script_version + "
                 "+obj.method() +"
 
-So assuming you entered: 
+So assuming you entered:
                 100
                 'Project_Yahoo'
 
-Then the resulting string sent to your database would be (again, this would technically be on one line): 
+Then the resulting string sent to your database would be (again, this would technically be on one line):
        SELECT s.script, ts.event, t.name , s.script_language, sv.name
-       FROM ml_script s, ml_table_script ts, ml_table t 
+       FROM ml_script s, ml_table_script ts, ml_table t
                   , ml_script_version sv
       WHERE s.script_id   = 100
         AND ts.version_id = 'Project_Yahoo'
-        AND ts.table_id   = t.table_id 
+        AND ts.table_id   = t.table_id
 
 Benefit:  
 You did not have to test your SQL by cutting and pasting it into a separate tool and replacing all the object and host variables yourself.  Just by visually selecting the string and running the command DBExecSQL (or the default mapping <Leader>se) the SQL statement was executed against the database and allowed to you enter host variables.
